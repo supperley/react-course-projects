@@ -1,4 +1,3 @@
-import CostItem from "./CostItem";
 import "./Costs.css";
 import Card from "../UI/Card";
 import CostsFilter from "./CostsFilter";
@@ -17,15 +16,16 @@ const Costs = (props) => {
     });
 
     return (
-        <li>
+        <div>
             <Card className="costs">
                 <CostsFilter
                     year={selectedYear}
                     onChangeYear={yearChangeHandler}
                 />
+
                 <CostList costs={filteredCosts} />
             </Card>
-        </li>
+        </div>
     );
 };
 
