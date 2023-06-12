@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import "./CostForm.css";
+import React, { useState } from 'react';
+import './CostForm.css';
 
 const CostForm = (props) => {
-    const [inputName, setInputName] = useState("");
-    const [inputAmount, setInputAmount] = useState("");
-    const [inputDate, setInputDate] = useState("");
+    const [inputName, setInputName] = useState('');
+    const [inputAmount, setInputAmount] = useState('');
+    const [inputDate, setInputDate] = useState('');
 
     //   const [userInput, setUserInput] = useState({
     //     name: "",
@@ -52,9 +52,9 @@ const CostForm = (props) => {
         };
 
         props.onSaveCostData(costData);
-        setInputName("");
-        setInputAmount("");
-        setInputDate("");
+        setInputName('');
+        setInputAmount('');
+        setInputDate('');
     };
 
     return (

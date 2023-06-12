@@ -1,5 +1,5 @@
-import CostItem from "./CostItem";
-import "./CostList.css";
+import CostItem from './CostItem';
+import './CostList.css';
 
 const CostList = (props) => {
     if (props.costs.length === 0) {
@@ -18,7 +18,6 @@ const CostList = (props) => {
                     amount={cost.amount}
                 />
             ))}
-            ;
         </ul>
     );
 };

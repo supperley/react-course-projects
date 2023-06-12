@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import CostForm from "./CostForm";
-import "./NewCost.css";
+import React, { useState } from 'react';
+import CostForm from './CostForm';
+import './NewCost.css';
 
 const NewCost = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);

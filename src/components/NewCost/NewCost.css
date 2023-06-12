@@ -7,9 +7,9 @@
     border-radius: 10px;
     text-align: center;
     box-shadow: 0 1px 7px rgba(0, 0, 0, 0.25);
-  }
-  
-  .new-cost button {
+}
+
+.new-cost button {
     font: inherit;
     cursor: pointer;
     padding: 1rem 2rem;
@@ -18,10 +18,10 @@
     color: #fefae1;
     border-radius: 10px;
     margin-right: 3px;
-  }
-  
-  .new-cost button:hover,
-  .new-cost button:active {
+}
+
+.new-cost button:hover,
+.new-cost button:active {
     background-color: #2a5c84b2;
     border-color: #2a5c84b2;
-  }
+}
