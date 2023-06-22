@@ -1,6 +1,6 @@
 import React from 'react';
 import sushiImage from '../../assets/sushi.jpg';
-import styles from 'Header.module.css';
+import styles from './Header.module.css';
 import HeaderCartButton from './HeaderCartButton';
 
 const Header = (props) => {
