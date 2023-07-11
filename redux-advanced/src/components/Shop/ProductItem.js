@@ -6,7 +6,7 @@ import { cartActions } from '../../store/cart-slice';
 const ProductItem = (props) => {
     // const cart = useSelector((state) => state.cart);
 
-    const dispatchFunction = useDispatch();
+    const dispatchAction = useDispatch();
 
     const { id, title, price, description } = props;
 
@@ -42,7 +42,7 @@ const ProductItem = (props) => {
 
         // dispatchFunction(cartActions.updateCart(updatedCart));
 
-        dispatchFunction(
+        dispatchAction(
             cartActions.addItem({
                 id,
                 title,

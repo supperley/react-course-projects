@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { mainActions } from './main-slice';
 
 const initialState = {
     items: [],
@@ -47,6 +48,52 @@ const cartSlice = createSlice({
         // },
     },
 });
+
+export const sendCartData = (cartData) => {
+    return async (dispatchAction) => {
+        dispatchAction(
+            mainActions.showStatusMessage({
+                status: 'pending',
+                title: 'Отправка Данных',
+                message: 'Данные корзины отправляются на сервер...',
+            })
+        );
+
+        const sendHttpRequest = async () => {
+            const response = await fetch(
+                'https://react-course-http-6e306-default-rtdb.europe-west1.firebasedatabase.app/cart.json',
+                {
+                    method: 'PUT',
+                    body: JSON.stringify(cartData),
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error('Ошибка при отправке данных корзины');
+            }
+        };
+
+        try {
+            await sendHttpRequest();
+
+            dispatchAction(
+                mainActions.showStatusMessage({
+                    status: 'success',
+                    title: 'Отправка Данных Успешна',
+                    message: 'Данные корзины успешно отправлены на сервер!',
+                })
+            );
+        } catch (error) {
+            dispatchAction(
+                mainActions.showStatusMessage({
+                    status: 'error',
+                    title: 'Ошибка Запроса',
+                    message: 'Ошибка при отправке данных корзины!',
+                })
+            );
+        }
+    };
+};
 
 export const cartActions = cartSlice.actions;
 export default cartSlice;
