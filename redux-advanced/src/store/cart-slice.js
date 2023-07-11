@@ -4,6 +4,7 @@ import { mainActions } from './main-slice';
 const initialState = {
     items: [],
     itemsQuantity: 0,
+    isCartContentChanged: false,
 };
 
 const cartSlice = createSlice({
@@ -16,6 +17,7 @@ const cartSlice = createSlice({
                 (item) => item.id === newItem.id
             );
             state.itemsQuantity++;
+            state.isCartContentChanged = true;
             if (!existingItem) {
                 state.items.push({
                     id: newItem.id,
@@ -34,6 +36,7 @@ const cartSlice = createSlice({
             const id = action.payload;
             const existingItem = state.items.find((item) => item.id === id);
             state.itemsQuantity--;
+            state.isCartContentChanged = true;
             if (existingItem.quantity === 1) {
                 state.items = state.items.filter((item) => item.id !== id);
             } else {
@@ -42,10 +45,10 @@ const cartSlice = createSlice({
                     existingItem.totalPrice - existingItem.price;
             }
         },
-        // updateCart(state, action) {
-        //   state.items = action.payload.items;
-        //   state.itemsQuantity = action.payload.itemsQuantity;
-        // },
+        updateCart(state, action) {
+            state.items = action.payload.items;
+            state.itemsQuantity = action.payload.itemsQuantity;
+        },
     },
 });
 
@@ -59,12 +62,15 @@ export const sendCartData = (cartData) => {
             })
         );
 
-        const sendHttpRequest = async () => {
+        const sendDataHttpRequest = async () => {
             const response = await fetch(
                 'https://react-course-http-6e306-default-rtdb.europe-west1.firebasedatabase.app/cart.json',
                 {
                     method: 'PUT',
-                    body: JSON.stringify(cartData),
+                    body: JSON.stringify({
+                        items: cartData.items,
+                        itemsQuantity: cartData.itemsQuantity,
+                    }),
                 }
             );
 
@@ -74,7 +80,7 @@ export const sendCartData = (cartData) => {
         };
 
         try {
-            await sendHttpRequest();
+            await sendDataHttpRequest();
 
             dispatchAction(
                 mainActions.showStatusMessage({
@@ -96,4 +102,41 @@ export const sendCartData = (cartData) => {
 };
 
 export const cartActions = cartSlice.actions;
+
+export const getCartData = () => {
+    return async (dispatchAction) => {
+        const getDataHttpRequest = async () => {
+            const response = await fetch(
+                'https://react-course-http-6e306-default-rtdb.europe-west1.firebasedatabase.app/cart.json'
+            );
+
+            if (!response.ok) {
+                throw new Error('Невозможно извлечь данные');
+            }
+
+            const responseData = await response.json();
+
+            return responseData;
+        };
+
+        try {
+            const cartData = await getDataHttpRequest();
+            dispatchAction(
+                cartActions.updateCart({
+                    items: cartData.items || [],
+                    itemsQuantity: cartData.itemsQuantity,
+                })
+            );
+        } catch (error) {
+            dispatchAction(
+                mainActions.showStatusMessage({
+                    status: 'error',
+                    title: 'Ошибка Запроса',
+                    message: 'Ошибка при получении данных корзины!',
+                })
+            );
+        }
+    };
+};
+
 export default cartSlice;
