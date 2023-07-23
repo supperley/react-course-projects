@@ -6,7 +6,7 @@ const AddJoke = () => {
 
     const addJokeHandler = (jokeData) => {
         console.log(jokeData);
-        history.push('/jokes');
+        history.push('/joke-list');
     };
 
     return <JokeForm onAddJoke={addJokeHandler} />;
